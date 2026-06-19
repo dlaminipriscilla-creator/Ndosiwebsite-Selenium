@@ -3,26 +3,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterTest;
 
 public class LoginToNdosiWebsite {
 
-    @Test
-    public void loginToNdosiWebsiteTests() throws InterruptedException {
+    WebDriver driver;
 
-        WebDriver driver;
+    @BeforeTest
+    public void launchbrowser() {
         driver = new ChromeDriver();
         driver.get("https://ndosisimplifiedautomation.vercel.app/");
         driver.manage().window().maximize();
-        Thread.sleep(2000);
+    }
+
+    @Test
+    public void clickloginTests() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\"app-root\"]/nav/div[1]/div[3]/button/span[2]")).click();
-        driver.findElement(By.id("login-email")).sendKeys("dlamini@gmail.com");
-        driver.findElement(By.id("login-password")).sendKeys("@12345678");
-        driver.findElement(By.id("login-submit")).click();
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@id=\"app-root\"]/nav/div[1]/div[2]/div[1]/button")).click();
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@id =\"app-root\"]/nav/div[1]/div[2]/div[1]/div/button[2]/span[2]")).click();
-        driver.findElement(By.xpath("//*[@id=\"tab-btn-password\"]/span[2]")).click();
+    }
+     @Test(priority = 4)
+    public void fillformTest() throws InterruptedException {
         driver.findElement(By.id("name")).sendKeys("Priscilla Dlamini");
         driver.findElement(By.id("email")).sendKeys("scilla@test.com");
         driver.findElement(By.id("age")).click();
@@ -47,11 +47,27 @@ public class LoginToNdosiWebsite {
         driver.findElement(By.id("submissions-toggle-btn")).click();
         Thread.sleep(2000);
         driver.findElement(By.id("view-submission-0")).click();
-        Thread.sleep(2000);
-         driver.quit();
-
-
     }
-
-
+    @Test(priority = 1)
+    public void enterusernameAndPasswordTest() {
+        driver.findElement(By.id("login-email")).sendKeys("dlamini@gmail.com");
+        driver.findElement(By.id("login-password")).sendKeys("@12345678");
+    }
+        @Test(priority = 2)
+    public void clicksubmitTest() throws InterruptedException {
+        driver.findElement(By.name("loginSubmit")).click();
+        Thread.sleep(2000);
+    }
+    @Test(priority = 3)
+    public void navigateToFormTest() throws InterruptedException {
+        driver.findElement(By.xpath("//*[@id=\"app-root\"]/nav/div[1]/div[2]/div[1]/button")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id =\"app-root\"]/nav/div[1]/div[2]/div[1]/div/button[2]/span[2]")).click();
+        driver.findElement(By.xpath("//*[@id=\"tab-btn-password\"]/span[2]")).click();
+    }
+    @AfterTest
+    public void closebrowser() throws InterruptedException {
+        Thread.sleep(2000);
+        driver.quit();
+    }
 }
